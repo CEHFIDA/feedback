@@ -1,0 +1,24 @@
+{
+  "name": "selfreliance/feedback",
+  "type": "library",
+  "version": "1.0.0",
+  "description": "List of feedback for adminamazing",
+  "keywords": ["admin", "laravel"],
+  "homepage": "https://github.com/selfrelianceme/feedback",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "LemmaS",
+      "email": "lemmas.online@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8"
+  },
+  "autoload": {
+    "psr-4": {"Selfreliance\\feedback\\": "src/"}
+  }
+}
