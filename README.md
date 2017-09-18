@@ -11,7 +11,7 @@ composer require selfreliance/feedback
 
 Add Service Provider to `config/app.php` in `providers` section
 ```php
-Selfreliance\feedback\АeedbackServiceProvider::class,
+Selfreliance\feedback\FeedbackServiceProvider::class,
 ```
 
 Go to `http://myapp/admin/feedback` to view admin amazing
