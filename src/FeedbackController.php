@@ -4,12 +4,12 @@ namespace Selfreliance\feedback;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 use App\User;
-use Models\Feedback;
+use DB;
 use Illuminate\Support\Facades\Notification;
-use Notifications\SupportNotification;
+use Selfreliance\feedback\Notifications\SupportNotification;
+use Selfreliance\feedback\Feedback;
 
 class FeedbackController extends Controller
 {
@@ -39,7 +39,6 @@ class FeedbackController extends Controller
 
 
     	$feedback = Feedback::findOrFail($id);
-    	$email_feedback = Feedback::where('id', $id)->value('email');
     	if($feedback->status != 'Reply')
         {
             $feedback->status = 'Reply';
@@ -52,7 +51,7 @@ class FeedbackController extends Controller
         );
 
         (new User)->forceFill([
-            'email' => $email_feedback
+            'email' => $feedback->email
         ])->notify(new SupportNotification($info));
 
     	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');

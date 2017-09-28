@@ -16,6 +16,7 @@
                                     <th>Sent</th>
                                     <th>Subject</th>
                                     <th>Status</th>
+                                    <th>Lang</th>
                                     <th class="text-nowrap">Действие</th>
                                 </tr>
                             </thead>
@@ -25,7 +26,8 @@
                                         <td>{{$feedback->id}}</td>
                                         <td>{{$feedback->name}}</td>
                                         <td>{{$feedback->subject}}</td>
-                                        <td>{{$feedback->status}}</td>                                
+                                        <td>{{$feedback->status}}</td>
+                                        <td>{{$feedback->lang}}</td>                  
                                         <td class="text-nowrap">     
                                             <form action="{{ route('AdminFeedbackDelete', $feedback->id) }}" method="POST">     
                                                 {{ method_field('DELETE') }}
