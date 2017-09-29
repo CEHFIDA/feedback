@@ -15,14 +15,14 @@ class FeedbackServiceProvider extends ServiceProvider
     {
         //
         include __DIR__.'/routes.php';
-        $this->app->make('Selfreliance\feedback\FeedbackController');
+        $this->app->make('Selfreliance\Feedback\FeedbackController');
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->publishes([
             __DIR__.'/configs/feedback.php' => config_path('feedback.php'),
         ], 'config');
         $this->publishes([
-            __DIR__ . '/migrations/' => base_path('/database/migrations')
+            __DIR__ . '/migrations/' => base_path('/database/migrations'),
         ], 'migrations');
     }
 

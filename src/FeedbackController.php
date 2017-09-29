@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\User;
-use DB;
 use Illuminate\Support\Facades\Notification;
-use Selfreliance\feedback\Notifications\SupportNotification;
-use Selfreliance\feedback\Feedback;
+use App\Notifications\SupportNotification;
+use Selfreliance\Feedback\Models\Feedback;
 
 class FeedbackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('CheckAccess');
+    }
+
     public function index()
     {
     	$feedback_messages = Feedback::orderBy('id', 'desc')->paginate(10);
