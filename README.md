@@ -26,7 +26,7 @@ Vendor/Selfreliance/Feedback/Notifications/SupportNotification in App/Notificati
   @ request type (get)
 */
 function show($id) // get all about feedback and show blade 'show'
-$this->show($id) // usage
+$this->show('1') // usage
 
 /*
   @ param $id (integer)
