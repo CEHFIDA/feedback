@@ -7,12 +7,10 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-use App\Channels\HttpChannel;
-Use App\Channels\Messages\HttpMessage;
-
 class VerifyEmailNotification extends Notification
 {
     use Queueable;
+    
     protected $info;
 
     /**
@@ -22,7 +20,6 @@ class VerifyEmailNotification extends Notification
      */
     public function __construct($info)
     {
-        //
         $this->info = $info;
     }
 
@@ -34,7 +31,7 @@ class VerifyEmailNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', HttpChannel::class];
+        return ['mail'];
     }
 
     /**
@@ -49,19 +46,6 @@ class VerifyEmailNotification extends Notification
                 ->subject($info['subject'])
                 ->greeting('Ответ поддержки BlockDash.io')
                 ->line($info['message']);
-    }
-
-    public function toHttp($notifiable){   
-        $params = [];
-        if(isset($this->info)){
-            $params = $this->info;
-        }
-        if(isset($notifiable->notiffication_status)){
-            $HttpParam = json_decode($notifiable->notiffication_status);
-            return HttpMessage::create()->method($HttpParam->method)->url($HttpParam->url)->params($params);
-        }else{
-            return null;
-        }
     }
 
     /**
