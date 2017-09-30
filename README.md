@@ -15,8 +15,11 @@ composer require selfreliance/feedback
 
 Migrations
 ```php
-php artisan vendor:publish --provider="Vendor\Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations"
-php artisan migrate
+php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations"
+```
+And do not forget about 
+```php 
+php artisan migrate 
 ```
 
 Moving files
