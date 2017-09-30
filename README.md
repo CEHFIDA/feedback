@@ -13,6 +13,12 @@ Install via composer
 composer require selfreliance/feedback
 ```
 
+Migrations
+```php
+php artisan vendor:publish --provider="Vendor\Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations"
+php artisan migrate
+```
+
 Moving files
 ```
 Vendor/Selfreliance/Feedback/Notifications/SupportNotification in App/Notifications
