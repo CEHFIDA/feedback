@@ -39,4 +39,5 @@ function send($id, Request $request) // sends a message on id feedback (email), 
   @ request type (delete)
 */
 function destroy($id) // delete feedback with $id
+$this->destroy(1) // usage
 ```
