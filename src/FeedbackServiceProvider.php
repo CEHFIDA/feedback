@@ -21,6 +21,10 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/migrations/' => base_path('/database/migrations'),
         ], 'migrations');
+        
+        $this->publishes([
+            __DIR__ . '/notification/SupportNotification.php' => app_path('Notifications/SupportNotification.php'),
+        ], 'notification');
     }
 
     /**
