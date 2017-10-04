@@ -15,16 +15,17 @@ composer require selfreliance/feedback
 
 Migrations
 ```php
-php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations" --force
 ```
+
+Notification
+```
+php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="notification" --force
+```
+
 And do not forget about 
 ```php 
 php artisan migrate 
-```
-
-Moving files
-```
-Vendor/Selfreliance/Feedback/Notifications/SupportNotification in App/Notifications
 ```
 
 ## Functions
