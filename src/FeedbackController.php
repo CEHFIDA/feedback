@@ -44,10 +44,10 @@ class FeedbackController extends Controller
             $feedback->save();
         }
 
-        $info = [
+        $info = array(
             'subject' => $request->input('subject'),
             'message' => $request->input('message')
-        ];
+        );
 
         (new User)->forceFill([
             'email' => $feedback->email

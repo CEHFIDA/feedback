@@ -10,6 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class SupportNotification extends Notification
 {
     use Queueable;
+    
     protected $info;
 
     /**
@@ -42,9 +43,9 @@ class SupportNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->subject($this->info->subject)
+                ->subject($this->info['subject'])
                 ->greeting('Ответ поддержки BlockDash.io')
-                ->line($this->info->message);
+                ->line($this->info['message']);
     }
 
     /**
