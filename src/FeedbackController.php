@@ -63,16 +63,15 @@ class FeedbackController extends Controller
             'email' => 'required|email',
             'phone' => 'min:2|max:13',
             'subject' => 'required|min:2',
-            'msg' => 'required|min:2',
-            'lang' => 'required'
+            'msg' => 'required|min:2'
         ]);
 
         $model->name = $request->input('name');
         $model->email = $request->input('email');
-        $model->phone = $request->input('phone');
+        $model->phone = ($request['phone']) ? $request->input('phone') : 'nope';
         $model->subject = $request->input('subject');
         $model->msg = $request->input('msg');
-        $model->lang = $request->input('lang');
+        $model->lang = \LaravelGettext::getLocale();
 
         if($model->save()) echo '<div class="alert alert-success">Мы свяжемся с вами!</div>';
     }
