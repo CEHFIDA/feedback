@@ -43,9 +43,9 @@ class SupportNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->subject($info['subject'])
+                ->subject($this->$info['subject'])
                 ->greeting('Ответ поддержки BlockDash.io')
-                ->line($info['message']);
+                ->line($this->$info['message']);
     }
 
     /**
