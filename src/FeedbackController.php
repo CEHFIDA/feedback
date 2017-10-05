@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\SupportNotification;
 use Selfreliance\Feedback\Models\Feedback;
+use Selfreliance\Feedback\Notifications\SupportNotification;
 
 class FeedbackController extends Controller
 {

@@ -18,11 +18,6 @@ Migrations
 php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations" --force
 ```
 
-Notification
-```php
-php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="notification" --force
-```
-
 Javascript
 ```php
 php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="javascript" --force
