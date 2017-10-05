@@ -19,11 +19,11 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->publishes([
-            __DIR__ . '/migrations/' => base_path('/database/migrations'),
+            __DIR__ . '/migrations/' => base_path('/database/migrations')
         ], 'migrations');
         
         $this->publishes([
-            __DIR__ . '/notification/SupportNotification.php' => app_path('Notifications/SupportNotification.php'),
+            __DIR__ . '/notification/SupportNotification.php' => app_path('Notifications/SupportNotification.php')
         ], 'notification');
         
         $this->publishes([
