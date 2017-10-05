@@ -25,6 +25,10 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/notification/SupportNotification.php' => app_path('Notifications/SupportNotification.php'),
         ], 'notification');
+        
+        $this->publishes([
+            __DIR__.'/js/contact.js' => public_path('vendor/contactform/contact.js')
+        ], 'javascript');
     }
 
     /**

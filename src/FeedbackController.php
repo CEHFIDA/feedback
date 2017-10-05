@@ -12,11 +12,6 @@ use Selfreliance\Feedback\Models\Feedback;
 
 class FeedbackController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('CheckAccess');
-    }
-
     public function index()
     {
     	$feedback_messages = Feedback::orderBy('id', 'desc')->paginate(10);
@@ -59,6 +54,27 @@ class FeedbackController extends Controller
         ])->notify(new SupportNotification($info));
 
     	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');
+    }
+
+    public function send_contacts(Request $request, Feedback $model)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:2',
+            'email' => 'required|email',
+            'phone' => 'min:2|max:13',
+            'subject' => 'required|min:2',
+            'msg' => 'required|min:2',
+            'lang' => 'required'
+        ]);
+
+        $model->name = $request->input('name');
+        $model->email = $request->input('email');
+        $model->phone = $request->input('phone');
+        $model->subject = $request->input('subject');
+        $model->msg = $request->input('msg');
+        $model->lang = $request->input('lang');
+
+        if($model->save()) echo '<div class="alert alert-success">Мы свяжемся с вами!</div>';
     }
 
     public function destroy($id)

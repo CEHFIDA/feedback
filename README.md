@@ -23,9 +23,19 @@ Notification
 php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="notification" --force
 ```
 
-And do not forget about 
-```php 
-php artisan migrate 
+Javascript
+```
+php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="javascript" --force
+```
+
+Connect javascript
+```html
+<script src="{{ asset('vendor/contactform/contact.js') }}"></script>
+```
+
+Migrate
+```php
+php artisan migrate
 ```
 
 ## Functions
@@ -50,4 +60,20 @@ function send($id, Request $request) // sends a message on id feedback (email), 
 */
 function destroy($id) // delete feedback with $id
 $this->destroy(1) // usage
+```
+
+## Usage
+
+```
+	Transimt data to url (/contacts) - method POST:
+		- name (required)
+		- email (required)
+		- subject (required)
+		- msg (required)
+		- phone
+```
+
+Do not forget about result
+```php 
+<div id = "result"></div>
 ```
