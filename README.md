@@ -19,12 +19,12 @@ php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProv
 ```
 
 Notification
-```
+```php
 php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="notification" --force
 ```
 
 Javascript
-```
+```php
 php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="javascript" --force
 ```
 
