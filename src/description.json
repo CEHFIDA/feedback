@@ -1,6 +1,4 @@
 {
-  "route": "AdminFeedback",
-  "description": "Обратная связь",
-  "icon": "mdi mdi-headset",
-  "prefix": "admin/feedback"
+  "package": "feedback",
+  "name": "Обратная связь"
 }

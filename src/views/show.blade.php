@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 <label for="subject" class="col-md-12">Тема ответа</label>
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="subject" id="subject" value="RE: {{$feedback->subject}}" class="form-control form-control-line">
+                                    <input type="text" class="form-control" name="subject" id="subject" value="RE: {{$feedback->subject}}">
                                 </div>
                             </div>
                             <div class="form-group">
