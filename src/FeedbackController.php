@@ -85,9 +85,9 @@ class FeedbackController extends Controller
             ];
         }
         
-        return response()->json([
+        return response()->json(
             $data
-        ]);
+        );
     }
 
     public function destroy($id)
