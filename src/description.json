@@ -1,4 +1,5 @@
 {
   "package": "feedback",
-  "name": "Обратная связь"
+  "name": "Обратная связь",
+  "icon": "mdi mdi-headset"
 }
