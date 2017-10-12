@@ -73,7 +73,21 @@ class FeedbackController extends Controller
         $model->msg = $request->input('msg');
         $model->lang = \LaravelGettext::getLocale();
 
-        if($model->save()) echo '<div class="alert alert-success">Мы свяжемся с вами!</div>';
+        if($model->save()){
+            $data = [
+                'success' => true,
+                'message' => "Сообщение успешно отправлено!"
+            ];
+        }else{
+            $data = [
+                "success" => false,
+                "message" => "Что-то пошло не так..."
+            ];
+        }
+        
+        return response()->json([
+            $data
+        ]);
     }
 
     public function destroy($id)
