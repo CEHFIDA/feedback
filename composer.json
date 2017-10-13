@@ -1,9 +1,9 @@
 {
   "name": "selfreliance/feedback",
   "type": "library",
-  "version": "1.0.16",
-  "description": "List of news for adminamazing",
-  "keywords": ["admin", "laravel"],
+  "version": "1.0.17",
+  "description": "List of feedback for adminamazing",
+  "keywords": ["admin", "feedback", "laravel"],
   "homepage": "https://github.com/selfrelianceme/feedback",
   "license": "MIT",
   "authors": [

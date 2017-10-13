@@ -56,8 +56,12 @@ class FeedbackController extends Controller
     	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');
     }
 
-    public function send_contacts(Request $request, Feedback $model)
+    public function send_contacts($captcha = false, Request $request, Feedback $model)
     {
+    	if($captcha){
+    		// re-captcha here
+    	}
+
         $this->validate($request, [
             'name' => 'required|min:2',
             'email' => 'required|email',
