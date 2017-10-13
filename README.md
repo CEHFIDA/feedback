@@ -60,6 +60,7 @@ $this->destroy(1) // usage
 ## Usage
 
 ```
+	If you want to add captch then add to url - / true or 1 (default send with false or 0)
 	Transimt data to url (/contacts) - method POST:
 		- name (required)
 		- email (required)
