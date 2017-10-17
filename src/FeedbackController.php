@@ -56,8 +56,12 @@ class FeedbackController extends Controller
     	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');
     }
 
-    public function send_contacts(Request $request, Feedback $model)
+    public function send_contacts($captcha = false, Request $request, Feedback $model)
     {
+    	if($captcha){
+    		// re-captcha here
+    	}
+
         $this->validate($request, [
             'name' => 'required|min:2',
             'email' => 'required|email',
@@ -73,13 +77,32 @@ class FeedbackController extends Controller
         $model->msg = $request->input('msg');
         $model->lang = \LaravelGettext::getLocale();
 
-        if($model->save()) echo '<div class="alert alert-success">Мы свяжемся с вами!</div>';
+        if($model->save()){
+            $data = [
+                'success' => true,
+                'message' => "Сообщение успешно отправлено!"
+            ];
+        }else{
+            $data = [
+                "success" => false,
+                "message" => "Что-то пошло не так..."
+            ];
+        }
+        
+        return response()->json(
+            $data
+        );
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-    	$feedback = Feedback::findOrFail($id);
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+
+    	$feedback = Feedback::findOrFail($request->input('id'));
     	$feedback->delete();
+
     	return redirect()->route('AdminFeedback')->with('status', 'Сообщение удалено!');
     }
 }

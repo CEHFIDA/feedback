@@ -20,13 +20,15 @@
                             <div class="form-group">
                                 <label for="subject" class="col-md-12">Тема ответа</label>
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="subject" id="subject" value="RE: {{$feedback->subject}}" class="form-control form-control-line">
+                                    <input type="text" class="form-control" name="subject" id="subject" value="RE: {{$feedback->subject}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="msg" class="col-md-12">Текст ответа</label>
                                 <div class="col-md-12">
-                                    <textarea class="textarea_editor form-control" name="message" id="msg" rows="15"></textarea>
+                                    <textarea class="textarea_editor form-control" name="message" id="msg" rows="15">
+                                        {{$feedback->msg}}
+                                    </textarea>
                                 </div>
                             </div>
                             {{ csrf_field() }}
