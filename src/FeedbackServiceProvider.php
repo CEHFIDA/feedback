@@ -19,9 +19,11 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->publishes([
+            __DIR__ . '/config/feedback.php' => config_path('feedback.php')
+        ], 'config')
+        $this->publishes([
             __DIR__ . '/migrations/' => database_path('migrations')
-        ], 'migrations');
-        
+        ], 'migrations');    
         $this->publishes([
             __DIR__.'/js/core.js' => public_path('js/core.js')
         ], 'javascript');
