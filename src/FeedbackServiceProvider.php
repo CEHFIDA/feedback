@@ -23,7 +23,7 @@ class FeedbackServiceProvider extends ServiceProvider
         ], 'migrations');
         
         $this->publishes([
-            __DIR__.'/js/contact.js' => public_path('vendor/contactform/contact.js')
+            __DIR__.'/js/core.js' => public_path('js/core.js')
         ], 'javascript');
     }
 

@@ -25,7 +25,7 @@ php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProv
 
 Connect javascript
 ```html
-<script src="{{ asset('vendor/contactform/contact.js') }}"></script>
+<script src="{{ asset('js/core.js') }}"></script>
 ```
 
 Migrate
@@ -33,42 +33,14 @@ Migrate
 php artisan migrate
 ```
 
-## Functions
-
-```php
-/*
-  @ param $id (integer)
-  @ request type (get)
-*/
-function show($id) // get all about feedback and show blade 'show'
-$this->show(1) // usage
-
-/*
-  @ param $id (integer)
-  @ param $request (post)
-*/
-function send($id, Request $request) // sends a message on id feedback (email), transmit data: subject, message (required)
-
-/*
-  @ param $id (integer)
-  @ request type (delete)
-*/
-function destroy($id) // delete feedback with $id
-$this->destroy(1) // usage
-```
-
 ## Usage
 
 ```
-	Transimt data to url (/contacts) - method POST:
+	Transimt data to url (/contacts or from config feedback) - method POST:
 		- name (required)
 		- email (required)
 		- subject (required)
 		- msg (required)
 		- phone
-```
-
-Do not forget about result
-```php 
-<div id = "result"></div>
+		- captcha (if you want to tie the CAPTCHA to the form)
 ```
