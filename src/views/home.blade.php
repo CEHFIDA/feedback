@@ -2,39 +2,26 @@
 
 @section('pageTitle', 'Обратная связь')
 @section('content')
-    <div class="modal fade" id="deleteModal" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('AdminFeedbackDelete') }}" method="POST" class="form-horizontal">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">Вы точно хотите удалить данное сообщение?</div>
-                    <div class="modal-footer">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        <input type="hidden" name="id" value="">
-                        <button type="submit" class="btn btn-danger">Удалить</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <script>
+    var route = '{{ route('AdminFeedbackDelete') }}';
+    var message = 'Вы точно хотите удалить данное сообщение?';
+    </script>
     <div class="row">
         <!-- Column -->
         <div class="col-12">
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">@yield('pageTitle')</h4>
+                    @if(count($feedback_messages) > 0)
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Sent</th>
-                                    <th>Subject</th>
-                                    <th>Status</th>
-                                    <th>Lang</th>
+                                    <th>Отправил</th>
+                                    <th>Тема</th>
+                                    <th>Статус</th>
+                                    <th>Язык</th>
                                     <th class="text-nowrap">Действие</th>
                                 </tr>
                             </thead>
@@ -47,15 +34,19 @@
                                         <td>{{$feedback->status}}</td>
                                         <td>{{$feedback->lang}}</td>                  
                                         <td class="text-nowrap">     
-                                            <a href="{{ route('AdminFeedbackAbout', $feedback->id) }}" data-toggle="tooltip" data-original-title="Просмотреть"><i class="fa fa fa-eye text-inverse m-r-10"></i></a>
-                                            <a href="#deleteModal" class="delete_toggle" data-rel="{{ $feedback->id }}" data-toggle="modal"><i class="fa fa-close text-danger"></i></a>
+                                            <a href="{{ route('AdminFeedbackShow', $feedback->id) }}" data-toggle="tooltip" data-original-title="Просмотреть"><i class="fa fa fa-eye text-inverse m-r-10"></i></a>
+                                            <a href="#deleteModal" class="delete_toggle" data-id="{{ $feedback->id }}" data-toggle="modal"><i class="fa fa-close text-danger"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    
+                    @else
+                    <div class="alert alert-warning text-center">
+                        <h4>Сообщений не найдено!</h4>
+                    </div>
+                    @endif
                 </div>
             </div>
             <nav aria-label="Page navigation example" class="m-t-40">

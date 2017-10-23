@@ -3,21 +3,29 @@
 namespace Selfreliance\feedback;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Selfreliance\Feedback\Models\Feedback;
 use Selfreliance\Feedback\Notifications\SupportNotification;
 
 class FeedbackController extends Controller
 {
+    /**
+     * Index
+     * @return view home with feedback messages
+    */    
     public function index()
     {
     	$feedback_messages = Feedback::orderBy('id', 'desc')->paginate(10);
         return view('feedback::home')->with(['feedback_messages'=>$feedback_messages]);
     }
 
+    /**
+     * Show
+     * @param int $id
+     * @return view show with $feedback
+    */
     public function show($id)
     {
     	$feedback = Feedback::findOrFail($id);
@@ -29,7 +37,13 @@ class FeedbackController extends Controller
     	return view('feedback::show')->with(['feedback'=>$feedback]);
     }
 
-    public function send($id, Request $request)
+    /**
+     * Send reply
+     * @param int $id
+     * @param request $request
+     * @return mixed
+    */
+    public function send_reply($id, Request $request)
     {
         $this->validate($request, [
             'subject' => 'required',
@@ -56,7 +70,13 @@ class FeedbackController extends Controller
     	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');
     }
 
-    public function send_contacts(Request $request, Feedback $model)
+    /**
+     * Send feedback
+     * @param request $request
+     * @param \Feedback $model
+     * @return response json
+    */
+    public function send_feedback(Request $request, Feedback $model)
     {
         $this->validate($request, [
             'name' => 'required|min:2',
@@ -98,13 +118,14 @@ class FeedbackController extends Controller
         );
     }
 
-    public function destroy(Request $request)
+    /**
+     * Destroy feedback
+     * @param int $id
+     * @return mixed
+    */
+    public function destroy($id)
     {
-        $this->validate($request, [
-            'id' => 'required'
-        ]);
-
-    	$feedback = Feedback::findOrFail($request->input('id'));
+    	$feedback = Feedback::findOrFail($id);
     	$feedback->delete();
 
     	return redirect()->route('AdminFeedback')->with('status', 'Сообщение удалено!');

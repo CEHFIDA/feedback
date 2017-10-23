@@ -13,14 +13,9 @@ Install via composer
 composer require selfreliance/feedback
 ```
 
-Migrations
+Migrations, javascript
 ```php
-php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="migrations" --force
-```
-
-Javascript
-```php
-php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="javascript" --force
+php artisan vendor:publish --provider="Selfreliance\feedback\FeedbackServiceProvider" --force
 ```
 
 Connect javascript
@@ -28,7 +23,7 @@ Connect javascript
 <script src="{{ asset('js/core.js') }}"></script>
 ```
 
-Migrate
+And do not forget about
 ```php
 php artisan migrate
 ```

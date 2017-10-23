@@ -13,7 +13,6 @@ class CreateTableFeedback extends Migration
      */
     public function up()
     {
-        //
         if (!Schema::hasTable('feedback')) {
             Schema::create('feedback', function (Blueprint $table) {
                 $table->increments('id');
@@ -38,8 +37,6 @@ class CreateTableFeedback extends Migration
      */
     public function down()
     {
-        //
-
         Schema::dropIfExists('feedback');
     }
 }
