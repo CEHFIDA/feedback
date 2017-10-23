@@ -20,7 +20,12 @@ php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProv
 
 Javascript
 ```php
-php artisan vendor:publish --provider="Selfreliance\Feedback\FeedbackServiceProvider" --tag="javascript" --force
+php artisan vendor:publish --provider="Selfreliance\feedback\FeedbackServiceProvider" --tag="javascript" --force
+```
+
+Config
+```php
+php artisan vendor:publish --provider="Selfreliance\feedback\FeedbackServiceProvider" --tag="config" --force
 ```
 
 Connect javascript
