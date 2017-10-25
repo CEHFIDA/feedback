@@ -67,7 +67,9 @@ class FeedbackController extends Controller
             'email' => $feedback->email
         ])->notify(new SupportNotification($info));
 
-    	return redirect()->route('AdminFeedback')->with('status', 'Ваш ответ был отправлен!');
+        flash()->success('Ваш ответ был отправлен!');
+
+    	return redirect()->route('AdminFeedback');
     }
 
     /**
@@ -127,6 +129,8 @@ class FeedbackController extends Controller
     {
     	$feedback = Feedback::findOrFail($id);
     	$feedback->delete();
+
+        flash()->success('Сообщение удалено!');
 
     	return redirect()->route('AdminFeedback')->with('status', 'Сообщение удалено!');
     }
