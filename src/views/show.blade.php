@@ -27,7 +27,8 @@
                                 <label for="msg" class="col-md-12">Текст ответа</label>
                                 <div class="col-md-12">
                                     <textarea class="textarea_editor form-control" name="message" id="msg" rows="15">
-                                        {{$feedback->msg}}
+                                        </br>
+                                        <blockquote>{{$feedback->msg}}</blockquote>
                                     </textarea>
                                 </div>
                             </div>

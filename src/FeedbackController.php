@@ -69,7 +69,7 @@ class FeedbackController extends Controller
 
         flash()->success('Ваш ответ был отправлен!');
 
-    	return redirect()->route('AdminFeedback');
+    	return redirect()->route('AdminFeedbackShow', $id)->with(['feedback'=>$feedback]);
     }
 
     /**
