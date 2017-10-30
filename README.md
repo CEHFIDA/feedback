@@ -37,5 +37,6 @@ php artisan migrate
 		- subject (required)
 		- msg (required)
 		- phone
-		- captcha (if you want to tie the CAPTCHA to the form)
 ```
+
+If you want to connect captcha, then check this page - [click](https://github.com/greggilbert/recaptcha/blob/master/README.md)
