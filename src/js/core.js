@@ -27,7 +27,7 @@ $(function(){
 					return ;
 				}
 				$.each($form.serializeArray(), function(i, field) {
-					var father = $form.find('[name='+field.name+']').parent('.form-group');
+					var father = $form.find('[name='+field.name+']').parent('.input-wrap');
                     father.removeClass('has-error').removeClass('has-success');
                     father.find('.help-block').html('');
 				});
@@ -36,6 +36,7 @@ $(function(){
 				if(!$form.hasClass('NoAddToPageError')){
 					if(data.message){
 						$form.prepend("<div class='alert alert-success'><p>"+data.message+"</p></div>");
+						$('.g-recaptcha iframe').attr('src', $('.g-recaptcha iframe').attr('src'));
 					}
 				}else{
 					$('#ErrorModal').find('.modal-body').html(data);
@@ -51,10 +52,10 @@ $(function(){
 	        		if(data.responseJSON){
 						$.each(data.responseJSON.errors, function(i,e){
 							var campo = $form.find('[name='+i+']');
-		                    var father = campo.parents('.form-group');
+		                    var father = campo.parents('.input-wrap');
 		                    father.removeClass('has-success');
 		                    father.addClass('has-error');
-		                    campo.after('<div class="help-block">'+e+'</div>');
+		                    father.append('<div class="help-block"><strong>'+e+'</strong></div>');
 						});
 					}
 				}else{

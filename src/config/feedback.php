@@ -1,5 +1,6 @@
 <?php
 
 return [
-	'path'		=>	"contacts"
+	'path'		=>	"contacts",
+	'captcha'	=>  false
 ];

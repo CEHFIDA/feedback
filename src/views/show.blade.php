@@ -44,5 +44,15 @@
             </div>
         </div>
         <!-- Column -->
+        {{--<div class="col-lg-2 col-xlg-3 col-md-3">
+            <div class="card">
+                <div class="tab-content">  
+                <div class="card-block">
+                    Coming soon
+                    <p></p>
+                </div>
+                </div>
+            </div>
+        </div>--}}
     </div>
 @endsection

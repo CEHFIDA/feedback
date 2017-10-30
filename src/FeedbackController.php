@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Selfreliance\Feedback\Models\Feedback;
 use Selfreliance\Feedback\Notifications\SupportNotification;
+use Recaptcha;
 
 class FeedbackController extends Controller
 {
@@ -88,11 +89,11 @@ class FeedbackController extends Controller
             'msg' => 'required|min:2'
         ]);
 
-        if(!is_null($request['captcha']))
+        if(config('feedback.captcha') == true)
         {
-            // captcha here
+            $this->validate($request, ['g-recaptcha-response' => 'required|recaptcha']);
         }
-
+        
         $model->name = $request->input('name');
         $model->email = $request->input('email');
         $model->phone = ($request['phone']) ? $request->input('phone') : 'nope';
@@ -104,7 +105,7 @@ class FeedbackController extends Controller
         {
             $data = [
                 'success' => true,
-                'message' => "Сообщение успешно отправлено!"
+                'message' => "Сообщение успешно отправлено!",
             ];
         }
         else
@@ -114,7 +115,7 @@ class FeedbackController extends Controller
                 "message" => "Что-то пошло не так..."
             ];
         }
-        
+
         return response()->json(
             $data
         );
