@@ -25,6 +25,8 @@ With the package there is another package of Laravel imap, for convenient parsin
 
 [read this](https://github.com/Webklex/laravel-imap/blob/master/README.md)
 
+##
+
 Connect javascript
 ```html
 <script src="{{ asset('js/core.js') }}"></script>
@@ -60,7 +62,7 @@ php artisan migrate
 ```
 
 ## Call the parser manually
-```
+```php
 use Selfreliance/Feedback/FeedbackController;
 
 $parse = FeedbackController::parse_email();
