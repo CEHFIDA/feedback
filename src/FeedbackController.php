@@ -7,7 +7,9 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Selfreliance\Feedback\Models\Feedback;
+use Selfreliance\Feedback\Models\FeedbackData;
 use Selfreliance\Feedback\Notifications\SupportNotification;
+use Webklex\IMAP\Client;
 use Recaptcha;
 
 class FeedbackController extends Controller
@@ -19,23 +21,36 @@ class FeedbackController extends Controller
     public function index()
     {
     	$feedback_messages = Feedback::orderBy('id', 'desc')->paginate(10);
-        return view('feedback::home')->with(['feedback_messages'=>$feedback_messages]);
+        return view('feedback::home')->with(['feedback_messages' => $feedback_messages]);
     }
 
     /**
      * Show
      * @param int $id
-     * @return view show with $feedback
+     * @return view show with $feedback, $themes, $messages
     */
     public function show($id)
     {
     	$feedback = Feedback::findOrFail($id);
+
     	if($feedback->status == 'New') 
         {
             $feedback->status = 'Read';
             $feedback->save();
         }
-    	return view('feedback::show')->with(['feedback'=>$feedback]);
+
+        $themes = Feedback::where([
+            ['email', $feedback->email],
+            ['id', '!=', $feedback->id]
+        ])->get();
+
+        $messages = FeedbackData::where('email', $feedback->email)->get();
+
+    	return view('feedback::show')->with([
+            'feedback' => $feedback,
+            'themes' => $themes,
+            'messages' => $messages
+        ]);
     }
 
     /**
@@ -44,7 +59,7 @@ class FeedbackController extends Controller
      * @param request $request
      * @return mixed
     */
-    public function send_reply($id, Request $request)
+    public function send_reply($id, Request $request, FeedbackData $modelData)
     {
         $this->validate($request, [
             'subject' => 'required',
@@ -68,9 +83,66 @@ class FeedbackController extends Controller
             'email' => $feedback->email
         ])->notify(new SupportNotification($info));
 
+        $modelData->message_id = '';
+        $modelData->email = $feedback->email;
+        $modelData->message = $info['message'];
+        $modelData->is_admin = 1;
+        $modelData->save();
+
         flash()->success('Ваш ответ был отправлен!');
 
-    	return redirect()->route('AdminFeedbackShow', $id)->with(['feedback'=>$feedback]);
+    	return redirect()->route('AdminFeedbackShow', $id)->with(['feedback' => $feedback]);
+    }
+
+    /**
+     * Static parse email
+     * @return bool
+    */
+    public static function parse_email()
+    {
+        try
+        {
+            $client = new Client();
+            $client->connect();
+
+            $boxs = $client->getFolders();
+            $messages = $boxs[0]->getMessages();
+
+            if(count($messages) > 0)
+            {
+                foreach($messages as $message)
+                {
+                    $exist = FeedbackData::where('message_id', $message->message_id)->first();
+                    if(!$exist) 
+                    {
+                        $exist_email = Feedback::where('email', $message->from[0]->mail)->first();
+                        if($exist_email)
+                        {
+                            $feedbackData = new FeedbackData();
+                            $feedbackData->message_id = $message->message_id;
+                            $feedbackData->email = $message->from[0]->mail;
+                            $feedbackData->message = $message->bodies['text']->content;
+                            $feedbackData->is_admin = 0;
+                            $feedbackData->save();
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                throw new \Exception('Mailbox empty');
+            }
+        }
+        catch(\Exception $e) 
+        {
+            return false;
+        }
+        finally
+        {
+            $client->disconnect();
+            unset($client);
+            return true;
+        }
     }
 
     /**
@@ -96,13 +168,15 @@ class FeedbackController extends Controller
         
         $model->name = $request->input('name');
         $model->email = $request->input('email');
-        $model->phone = ($request['phone']) ? $request->input('phone') : 'nope';
+        $model->phone = $request->input('phone') ?? 'nope';
         $model->subject = $request->input('subject');
         $model->msg = $request->input('msg');
         $model->lang = \LaravelGettext::getLocale();
 
         if($model->save())
         {
+            $code = 200;
+
             $data = [
                 'success' => true,
                 'message' => "Сообщение успешно отправлено!",
@@ -110,15 +184,15 @@ class FeedbackController extends Controller
         }
         else
         {
+            $code = 422;
+
             $data = [
                 "success" => false,
                 "message" => "Что-то пошло не так..."
             ];
         }
 
-        return response()->json(
-            $data
-        );
+        return \Response::json($data, $code);
     }
 
     /**
@@ -129,10 +203,12 @@ class FeedbackController extends Controller
     public function destroy($id)
     {
     	$feedback = Feedback::findOrFail($id);
+
+        $feedback->feedback_data()->delete();
     	$feedback->delete();
 
         flash()->success('Сообщение удалено!');
 
-    	return redirect()->route('AdminFeedback')->with('status', 'Сообщение удалено!');
+    	return redirect()->route('AdminFeedback');
     }
 }

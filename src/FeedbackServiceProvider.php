@@ -13,7 +13,6 @@ class FeedbackServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         include __DIR__.'/routes.php';
         $this->app->make('Selfreliance\Feedback\FeedbackController');
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
@@ -27,6 +26,9 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/js/core.js' => public_path('js/core.js')
         ], 'javascript');
+        $this->publishes([
+            __DIR__.'/command/EmailParser.php' => app_path('Console/Commands/EmailParser.php')
+        ], 'command');
     }
 
     /**

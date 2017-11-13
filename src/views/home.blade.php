@@ -7,7 +7,6 @@
     var message = 'Вы точно хотите удалить данное сообщение?';
     </script>
     <div class="row">
-        <!-- Column -->
         <div class="col-12">
             <div class="card">
                 <div class="card-block">
@@ -52,7 +51,6 @@
             <nav aria-label="Page navigation example" class="m-t-40">
                 {{ $feedback_messages->links('vendor.pagination.bootstrap-4') }}
             </nav>            
-        </div>
-        <!-- Column -->    
+        </div>   
     </div>
 @endsection
