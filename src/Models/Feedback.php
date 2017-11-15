@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Feedback extends Model
 {
+    const statusNew = 'New';
+    const statusRead = 'Read';
+    const statusReply = 'Reply';
+    
     use SoftDeletes;
 
     protected $fillable = [
@@ -16,5 +20,11 @@ class Feedback extends Model
 	public function feedback_data()
 	{
         return $this->hasMany('Selfreliance\Feedback\Models\FeedbackData', 'email', 'email');
+    }
+
+    public function setStatus($status)
+    {
+    	$this->status = $status;
+    	$this->save();
     }
 }

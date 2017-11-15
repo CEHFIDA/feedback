@@ -6,6 +6,10 @@ use Illuminate\Support\ServiceProvider;
 
 class FeedbackServiceProvider extends ServiceProvider
 {
+    protected $commands = [
+        'Selfreliance\Feedback\Console\EmailParser'
+    ];
+
     /**
      * Bootstrap the application services.
      *
@@ -17,6 +21,7 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->app->make('Selfreliance\Feedback\FeedbackController');
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'translate');
         $this->publishes([
             __DIR__ . '/config/feedback.php' => config_path('feedback.php')
         ], 'config');
@@ -26,9 +31,6 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/js/core.js' => public_path('js/core.js')
         ], 'javascript');
-        $this->publishes([
-            __DIR__.'/command/EmailParser.php' => app_path('Console/Commands/EmailParser.php')
-        ], 'command');
     }
 
     /**
@@ -38,6 +40,6 @@ class FeedbackServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->commands( $this->commands );
     }
 }

@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         @endif
-                        <form action="{{route('AdminFeedbackSend', $feedback->id)}}" method="POST" class="form-horizontal">          
+                        <form action="{{route('AdminFeedbackReply', $feedback->id)}}" method="POST" class="form-horizontal">          
                             <div class="form-group">
                                 <label for="subject" class="col-md-12">Тема ответа</label>
                                 <div class="col-md-12">

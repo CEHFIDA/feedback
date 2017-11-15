@@ -13,16 +13,18 @@ class CreateFeedbackDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedback_datas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('message_id')->default('');
-            $table->string('email');
-            $table->text('message');
-            $table->tinyInteger('is_admin');
+        if(!Schema::hasTable('feedback_datas')) {
+            Schema::create('feedback_datas', function (Blueprint $table) {
+                $table->increments('id');
+                $table->text('message_id');
+                $table->string('email');
+                $table->text('message');
+                $table->tinyInteger('is_admin');
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
     }
 
     /**

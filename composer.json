@@ -16,7 +16,10 @@
     "laravel": {
       "providers": [
         "Selfreliance\\Feedback\\FeedbackServiceProvider"
-       ]
+       ],
+      "aliases": {
+        "EmailParser": "Selfreliance\\Feedback\\Facades\\EmailParser"
+      }
     }
   },
   "require": {
@@ -30,5 +33,19 @@
   },
   "autoload": {
     "psr-4": {"Selfreliance\\Feedback\\": "src/"}
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
+      "php artisan optimize",
+      "php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force",
+      "php artisan migrate"
+    ],
+    "post-update-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan optimize",
+      "php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force",
+      "php artisan migrate"
+    ],
   }
 }

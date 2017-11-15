@@ -4,6 +4,7 @@ feedback - a package that allows you to control letters that have been sent thro
 ## Require
 
 - [adminamazing](https://github.com/selfrelianceme/adminamazing)
+- [recaptcha](https://github.com/greggilbert/recaptcha)
 - [laravel-imap](https://github.com/Webklex/laravel-imap)
 - configured and connected mail server
 
@@ -14,39 +15,9 @@ Install via composer
 composer require selfreliance/feedback
 ```
 
-Migrations, javascript, command
-```php
-php artisan vendor:publish --provider="Selfreliance\feedback\FeedbackServiceProvider" --force
-```
-
-## Laravel imap (required)
-
-With the package there is another package of Laravel imap, for convenient parsing
-
-[read this](https://github.com/Webklex/laravel-imap/blob/master/README.md)
-
-##
-
 Connect javascript
 ```html
 <script src="{{ asset('js/core.js') }}"></script>
-```
-
-Edit model Kernel (App/Console/Kernel.php)
-
-Add to $commands
-```
-Commands\EmailParser::class
-```
-
-Add to protected function schedule and [setup cron](https://scotch.io/@Kidalikevin/how-to-set-up-cron-job-in-laravel)
-```
-$schedule->command('email:parse')->everyMinute()->withoutOverlapping(); // p.s Mail parsing takes place every minute
-```
-
-And do not forget about
-```php
-php artisan migrate
 ```
 
 ## Usage
@@ -61,11 +32,24 @@ php artisan migrate
 		- captcha (if you want to tie the CAPTCHA to the form)
 ```
 
+## Connect captcha in your blade
+```php
+@if(config('feedback.captcha') == true)
+{!! \Recaptcha::render() !!}
+@endif
+```
+
+##
+
+With the package there is another package of Laravel imap, for convenient parsing
+
+[read this](https://github.com/Webklex/laravel-imap/blob/master/README.md)
+
+##
+
 ## Call the parser manually
 ```php
-use Selfreliance/Feedback/FeedbackController;
-
-$parse = FeedbackController::parse_email();
-if($parse) $this->info('Parse email successfuly.');
-else $this->error('Parse email error.');
+$messages = EmailParser::getInbox(); // get all messages from mail
+EmailParser::parseMessages($messages, false); // parse messages, false (EnableQuotes)
+unset($messages); // unset all messages
 ```

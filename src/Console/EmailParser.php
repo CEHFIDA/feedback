@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Selfreliance\feedback\Console;
 
 use Illuminate\Console\Command;
-use Selfreliance\Feedback\FeedbackController;
 
 class EmailParser extends Command
 {
@@ -38,8 +37,9 @@ class EmailParser extends Command
      */
     public function handle()
     {
-        $parse = FeedbackController::parse_email();
-        if($parse) $this->info('Parse email successfuly.');
-        else $this->error('Parse email error.');
+        $messages = \EmailParser::getInbox();
+        \EmailParser::parseMessages($messages);
+        unset($messages);
+        $this->info('Parse email succesfuly!');
     }
 }
