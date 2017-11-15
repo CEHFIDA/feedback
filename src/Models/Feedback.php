@@ -14,7 +14,7 @@ class Feedback extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'name', 'email', 'phone', 'subject', 'msg', 'status'
+    	'name', 'email', 'phone', 'subject', 'msg', 'lang', 'status'
     ];
 
 	public function feedback_data()
