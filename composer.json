@@ -33,19 +33,5 @@
   },
   "autoload": {
     "psr-4": {"Selfreliance\\Feedback\\": "src/"}
-  },
-  "scripts": {
-    "post-package-install": [
-      "Illuminate\\Foundation\\ComposerScripts::postInstall",
-      "php artisan optimize",
-      "php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force",
-      "php artisan migrate"
-    ],
-    "post-package-update": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan optimize",
-      "php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force",
-      "php artisan migrate"
-    ]
   }
 }
