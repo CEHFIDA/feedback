@@ -46,6 +46,6 @@
       "php artisan optimize",
       "php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force",
       "php artisan migrate"
-    ],
+    ]
   }
 }
