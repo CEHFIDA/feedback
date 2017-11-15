@@ -30,7 +30,7 @@ class FeedbackController extends Controller
     public function index()
     {
     	$feedback_messages = $this->feedback->orderBy('id', 'desc')->paginate(10);
-        return view('feedback::home')->with(['feedback_messages' => $feedback_messages]);
+        return view('feedback::home')->with( compact('feedback_messages') );
     }
 
     /**
@@ -44,7 +44,7 @@ class FeedbackController extends Controller
             $feedback->setStatus($this->feedback::statusRead);
 
         $themes = $feedback->where([
-            ['email', $feedback->email],
+            ['email', '=', $feedback->email], 
             ['id', '!=', $feedback->id]
         ])->get();
 
@@ -89,15 +89,15 @@ class FeedbackController extends Controller
     /**
      * Send feedback (contacts)
     */
-    public function send(SendRequest $request, Feedback $model)
+    public function send(SendRequest $reques)
     {
         if(config('feedback.captcha') == true)
             $this->validate($request, ['g-recaptcha-response' => 'required|recaptcha']);
 
         $data = [
             'name' => $request->input('name'),
-            'email' => $request->input('email'),
             'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
             'subject' => $request->input('subject'),
             'msg' => $request->input('msg'),
             'lang' => \LaravelGettext::getLocale()
