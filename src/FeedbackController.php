@@ -76,7 +76,7 @@ class FeedbackController extends Controller
 
         $this->feedbackData->create($data);
 
-        flash()->success('Сообщение успешно отправлено');
+        flash()->success( trans('translate-feedback::feedback.sendedReply') );
 
     	return redirect()->route('AdminFeedbackShow', $id)->with( compact('feedback') );
     }
@@ -132,7 +132,7 @@ class FeedbackController extends Controller
         $feedback->feedback_data()->delete();
     	$feedback->delete();
 
-        flash()->success('Сообщение удалено');
+        flash()->success( trans('translate-feedback::feedback.deletedMessage') );
 
     	return redirect()->route('AdminFeedback');
     }
