@@ -16,26 +16,24 @@ use Recaptcha;
 
 class FeedbackController extends Controller
 {
-    protected $feedback, $feedbackData;
+    private $feedback, $feedbackData;
 
     public function __construct(Feedback $model, FeedbackData $modelData)
     {
         $this->feedback = $model;
         $this->feedbackData = $modelData;
+        \Blocks::register('countFeedback', function(){
+            $count = $this->feedback->count('id');
+            return view('feedback::block', compact('count'))->render();
+        });
     }
 
-    /**
-     * Index
-    */    
     public function index()
     {
     	$feedback_messages = $this->feedback->orderBy('id', 'desc')->paginate(10);
         return view('feedback::home')->with( compact('feedback_messages') );
     }
 
-    /**
-     * Show feedback
-    */
     public function show($id)
     {
     	$feedback = $this->feedback->findOrFail($id);
@@ -53,9 +51,6 @@ class FeedbackController extends Controller
     	return view('feedback::show', compact(['feedback', 'themes', 'messages']));
     }
 
-    /**
-     * Send reply
-    */
     public function reply($id, ReplyRequest $request)
     {
     	$feedback = $this->feedback->findOrFail($id);
@@ -81,14 +76,11 @@ class FeedbackController extends Controller
 
         $this->feedbackData->create($data);
 
-        flash()->success( trans('translate::feedback.sendedReply') );
+        flash()->success('Сообщение успешно отправлено');
 
     	return redirect()->route('AdminFeedbackShow', $id)->with( compact('feedback') );
     }
 
-    /**
-     * Send feedback (contacts)
-    */
     public function send(SendRequest $request)
     {
         if(config('feedback.captcha') == true)
@@ -109,7 +101,7 @@ class FeedbackController extends Controller
 
             $response = [
                 'success' => true,
-                'message' => trans('translate::feedback.sendedMessage'),
+                'message' => trans('translate-feedback::feedback.sendedMessage'),
             ];
         }
         else
@@ -118,7 +110,7 @@ class FeedbackController extends Controller
 
             $response = [
                 "success" => false,
-                "message" => trans('translate::feedback.somethingWentWrong')
+                "message" => trans('translate-feedback::feedback.somethingWentWrong')
             ];
         }
 
@@ -133,9 +125,6 @@ class FeedbackController extends Controller
         }
     }
 
-    /**
-     * Destroy feedback
-    */
     public function destroy($id)
     {
     	$feedback = $this->feedback->findOrFail($id);
@@ -143,7 +132,7 @@ class FeedbackController extends Controller
         $feedback->feedback_data()->delete();
     	$feedback->delete();
 
-        flash()->success( trans('translate::feedback.deletedMessage') );
+        flash()->success('Сообщение удалено');
 
     	return redirect()->route('AdminFeedback');
     }

@@ -13,6 +13,6 @@ class EmailParser extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return new \Selfreliance\Feedback\EmailParser();
+        return 'emailparser';
     }
 }

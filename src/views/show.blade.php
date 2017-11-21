@@ -1,20 +1,24 @@
 @extends('adminamazing::teamplate')
 
-@section('pageTitle', 'Просмотр сообщения')
+@section('pageTitle', trans('translate-feedback::feedback.viewMessage'))
 @section('content')
+    @push('scripts')
+        <script>$('.textarea_editor').wysihtml5();</script>
+    @endpush
+
     <div class="row">
         <div class="col-lg-8 col-xlg-9 col-md-7"> 
             <div class="card">
                 <div class="tab-content">
                     <div class="card-block">
-                        <h5>Имя: {{$feedback->name}}</h5>
-                        <h5>Телефон: {{$feedback->phone}}</h5>
-                        <h5>Почта: {{$feedback->email}}</h5>
-                        <h5>Тема сообщения: {{$feedback->subject}}</h5>
+                        <h5>{{ trans('translate-feedback::feedback.name') }}: {{$feedback->name}}</h5>
+                        <h5>{{ trans('translate-feedback::feedback.phone') }}: {{$feedback->phone}}</h5>
+                        <h5>{{ trans('translate-feedback::feedback.email') }}: {{$feedback->email}}</h5>
+                        <h5>{{ trans('translate-feedback::feedback.themeMessage') }}: {{$feedback->subject}}</h5>
                         <hr>
                         <blockquote>{{$feedback->msg}}</blockquote>
                         @if(count($messages) > 0)
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseDialog" aria-expanded="false" aria-controls="collapseDialog">Весь диалог с данным пользователем
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseDialog" aria-expanded="false" aria-controls="collapseDialog">{{ trans('translate-feedback::feedback.viewAllConversations') }}
                         </button>
                         <div class="collapse" id="collapseDialog" aria-expanded="false" style="">
                             <div class="card card-block" style="max-height: 400px; overflow-y: scroll;">
@@ -31,13 +35,13 @@
                         @endif
                         <form action="{{route('AdminFeedbackReply', $feedback->id)}}" method="POST" class="form-horizontal">          
                             <div class="form-group">
-                                <label for="subject" class="col-md-12">Тема ответа</label>
+                                <label for="subject" class="col-md-12">{{ trans('translate-feedback::feedback.themeAnswer') }}</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" name="subject" id="subject" value="RE: {{$feedback->subject}}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="msg" class="col-md-12">Текст ответа</label>
+                                <label for="msg" class="col-md-12">{{ trans('translate-feedback::feedback.textAnswer') }}</label>
                                 <div class="col-md-12">
                                     <textarea class="textarea_editor form-control" name="message" id="msg" rows="15">
                                         <br><blockquote>{{$feedback->msg}}</blockquote>
@@ -47,7 +51,7 @@
                             {{csrf_field()}}
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">Ответить</button>
+                                    <button class="btn btn-success">{{ trans('translate-feedback::feedback.reply') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -60,12 +64,12 @@
             <div class="card">
                 <div class="tab-content">  
                     <div class="card-block">
-                        <h5><b>Неотвеченные</b> сообщения от текущего пользователя</h5>
+                        <h5>{!! trans('translate-feedback::feedback.unanswaredMessages') !!}</h5>
                         <div class="table-responsive" style="height:250px; overflow-y: auto">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Тема</th>
+                                        <th>{{ trans('translate-feedback::feedback.theme') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

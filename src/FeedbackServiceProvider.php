@@ -21,7 +21,7 @@ class FeedbackServiceProvider extends ServiceProvider
         $this->app->make('Selfreliance\Feedback\FeedbackController');
         $this->loadViewsFrom(__DIR__.'/views', 'feedback');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
-        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'translate');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'translate-feedback');
         $this->publishes([
             __DIR__ . '/config/feedback.php' => config_path('feedback.php')
         ], 'config');
@@ -40,6 +40,9 @@ class FeedbackServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands( $this->commands );
+        $this->commands('Selfreliance\Feedback\Console\EmailParser');
+        $this->app->bind('emailparser', function(){
+            return new \Selfreliance\Feedback\EmailParser();
+        });
     }
 }
