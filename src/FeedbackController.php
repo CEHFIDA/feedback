@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Notification;
 use Selfreliance\Feedback\Models\Feedback;
 use Selfreliance\Feedback\Models\FeedbackData;
 use Selfreliance\Feedback\Requests\SendRequest;
-use Selfreliance\Feedback\Requests\ReplyRequest;
 use Selfreliance\Feedback\Notifications\SupportNotification;
 use Webklex\IMAP\Client;
 use Recaptcha;
@@ -22,6 +21,7 @@ class FeedbackController extends Controller
     {
         $this->feedback = $model;
         $this->feedbackData = $modelData;
+
         \Blocks::register('countFeedback', function(){
             $count = $this->feedback->count('id');
             return view('feedback::block', compact('count'))->render();
@@ -30,8 +30,8 @@ class FeedbackController extends Controller
 
     public function index()
     {
-    	$feedback_messages = $this->feedback->orderBy('id', 'desc')->paginate(10);
-        return view('feedback::home')->with( compact('feedback_messages') );
+    	$feedbackMessages = $this->feedback->orderBy('id', 'desc')->paginate(10);
+        return view('feedback::home', compact('feedbackMessages'));
     }
 
     public function show($id)
@@ -41,18 +41,20 @@ class FeedbackController extends Controller
         if($feedback->status == $this->feedback::statusNew)
             $feedback->setStatus($this->feedback::statusRead);
 
-        $themes = $feedback->where([
-            ['email', '=', $feedback->email], 
-            ['id', '!=', $feedback->id]
-        ])->get();
+        $themes = $feedback->where('email', $feedback->email)->whereNotIn('id', $feedback->id)->get();
 
         $messages = $this->feedbackData->where('email', $feedback->email)->get();
 
     	return view('feedback::show', compact(['feedback', 'themes', 'messages']));
     }
 
-    public function reply($id, ReplyRequest $request)
+    public function reply($id, Request $request)
     {
+    	$this->validate($request, [
+    		'subject' => 'required|min:2',
+    		'message' => 'required|min:2'
+    	]);
+
     	$feedback = $this->feedback->findOrFail($id);
 
         $feedback->setStatus($this->feedback::statusReply);
@@ -62,7 +64,8 @@ class FeedbackController extends Controller
         Notification::route('mail', $feedback->email)->notify(
             new SupportNotification(
                 array(
-                    'subject' => $request->input('subject'), 'message' => $text
+                	'subject' => $request->input('subject'), 
+                	'message' => $text
                 )
             )
         );
@@ -88,7 +91,7 @@ class FeedbackController extends Controller
 
         $data = [
             'name' => $request->input('name'),
-            'phone' => $request->input('phone'),
+            'phone' => ($request['phone']) ? $request->input('phone') : '',
             'email' => $request->input('email'),
             'subject' => $request->input('subject'),
             'msg' => $request->input('msg'),

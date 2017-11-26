@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'supportAnswer' => 'Ответ поддержки',
     'sendedReply' => 'Ответ успешно отправлен',
     'sendedMessage' => 'Сообщение успешно отправлено',
     'deletedMessage' => 'Сообщение успешно удалено',

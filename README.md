@@ -1,6 +1,18 @@
 # Laravel 5 Admin Amazing feedback
 feedback - a package that allows you to control letters that have been sent through the contact form
 
+## Documentation
+
+- [Contact form](#contact-form)
+	- [Connect script](#connect-script-in-your-blade)
+	- [Create form](#create-form)
+	- [Settings captcha](#settings-captcha)
+	- [Connect captcha](#connect-captcha-in-your-blade)
+- [Parser messages](#parser-messages)
+	- [Settings](#settings)
+	- [Call manually](#call-manually)
+	- [Artisan command](#artisan-command)
+
 ## Require
 
 - [adminamazing](https://github.com/selfrelianceme/adminamazing)
@@ -15,51 +27,91 @@ Install via composer
 composer require selfreliance/feedback
 ```
 
-Migrations, javascript, config
-```
+Publish config, javascript
+```php
 php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force
 ```
 
-And do not forget about
-```
-php artisan migrate
-```
+## Contact form
 
-Connect javascript
+### Connect script in your blade
+
 ```html
 <script src="{{ asset('js/core.js') }}"></script>
 ```
 
-## Usage
+### Create form
 
+Transmit data to url (/contacts or url from config feedback) - method POST:
 ```
-	Transimt data to url (/contacts or url from config feedback) - method POST:
-		- name (required)
-		- email (required)
-		- subject (required)
-		- msg (required)
-		- phone
-		- captcha (if you want to tie the CAPTCHA to the form)
+- name (required),
+- email (required),
+- subject (required),
+- msg (required),
+- phone
 ```
 
-## Connect captcha in your blade
+### Settings captcha
+
+Add the service provider to the providers array in config/app.php
+```php
+'providers' => [
+	'Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+];
+```
+
+Add the aliases to the aliases array
+```php
+'aliases' => [
+	'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+];
+```
+
+Publish config
+```php
+php artisan vendor:publish --provider=Greggilbert\\Recaptcha\\RecaptchaServiceProvider
+```
+
+## In /config/recaptcha.php, enter your reCAPTCHA public and private keys
+
+### Connect captcha in your blade
 ```php
 @if(config('feedback.captcha') == true)
 {!! \Recaptcha::render() !!}
 @endif
 ```
 
-##
+## Parser messages
 
-With the package there is another package of Laravel imap, for convenient parsing
+### Settings
 
-[read this](https://github.com/Webklex/laravel-imap/blob/master/README.md)
+Add the service provider to the providers array in config/app.php
+```php
+'providers' => [
+    Webklex\IMAP\Providers\LaravelServiceProvider::class,
+];
+```
 
-##
+Add the aliases to the aliases array
+```php
+'aliases' => [
+    'Client' => Webklex\IMAP\Facades\Client::class
+];
+```
 
-## Call the parser manually
+Publish
+```php
+php artisan vendor:publish --provider=Webklex\\IMAP\Providers\\LaravelServiceProvider
+```
+
+### Call manually
 ```php
 $messages = EmailParser::getInbox(); // get all messages from mail
 EmailParser::parseMessages($messages, false); // parse messages, false (EnableQuotes)
 unset($messages); // unset all messages
+```
+
+### Artisan command
+```php
+php artisan email:parser // 'Parse email successfuly'
 ```

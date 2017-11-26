@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'supportAnswer' => 'Support Answer',
     'sendedReply' => 'Reply successfully sent',
     'sendedMessage' => 'Message sent successfully',
     'deletedMessage' => 'Message successfully deleted',
