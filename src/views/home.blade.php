@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">@yield('pageTitle')</h4>
-                    @if(count($feedback_messages) > 0)
+                    @if(count($feedbackMessages) > 0)
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($feedback_messages as $feedback)
+                                @foreach($feedbackMessages as $feedback)
                                     <tr>
                                         <td>{{$feedback->id}}</td>
                                         <td>{{$feedback->name}}</td>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <nav aria-label="Page navigation example" class="m-t-40">
-                {{ $feedback_messages->links('vendor.pagination.bootstrap-4') }}
+                {{ $feedbackMessages->links('vendor.pagination.bootstrap-4') }}
             </nav>            
         </div>   
     </div>

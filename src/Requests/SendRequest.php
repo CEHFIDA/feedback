@@ -26,7 +26,7 @@ class SendRequest extends FormRequest
         return [
             'name' => 'required|min:2',
             'email' => 'required|email',
-            'phone' => 'min:2|max:13',
+            'phone' => 'max:13',
             'subject' => 'required|min:2',
             'msg' => 'required|min:2'
         ];

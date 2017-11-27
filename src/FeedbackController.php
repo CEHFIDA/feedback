@@ -41,7 +41,7 @@ class FeedbackController extends Controller
         if($feedback->status == $this->feedback::statusNew)
             $feedback->setStatus($this->feedback::statusRead);
 
-        $themes = $feedback->where('email', $feedback->email)->whereNotIn('id', $feedback->id)->get();
+        $themes = $feedback->where('email', $feedback->email)->orWhere('id', '!=', $feedback->id)->get();
 
         $messages = $this->feedbackData->where('email', $feedback->email)->get();
 
@@ -59,12 +59,12 @@ class FeedbackController extends Controller
 
         $feedback->setStatus($this->feedback::statusReply);
 
-        $text = $request->input('message');
+        $text = $request['message'];
 
         Notification::route('mail', $feedback->email)->notify(
             new SupportNotification(
                 array(
-                	'subject' => $request->input('subject'), 
+                	'subject' => $request['subject'],
                 	'message' => $text
                 )
             )
@@ -90,11 +90,11 @@ class FeedbackController extends Controller
             $this->validate($request, ['g-recaptcha-response' => 'required|recaptcha']);
 
         $data = [
-            'name' => $request->input('name'),
-            'phone' => ($request['phone']) ? $request->input('phone') : '',
-            'email' => $request->input('email'),
-            'subject' => $request->input('subject'),
-            'msg' => $request->input('msg'),
+            'name' => $request['name'],
+            'phone' => $request['phone'] ?? '',
+            'email' => $request['email'],
+            'subject' => $request['subject'],
+            'msg' => $request['msg'],
             'lang' => \LaravelGettext::getLocale()
         ];
 
