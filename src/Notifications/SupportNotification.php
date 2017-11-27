@@ -44,7 +44,7 @@ class SupportNotification extends Notification
     {
         return (new MailMessage)
                 ->subject($this->info['subject'])
-                ->greeting( trans('translate-feedback.feedback.supportAnswer').config('app.name') )
+                ->greeting('Ответ поддержки '.config('app.name') )
                 ->line($this->info['message']);
     }
 
