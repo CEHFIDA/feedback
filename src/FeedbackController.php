@@ -91,7 +91,7 @@ class FeedbackController extends Controller
 
         $data = [
             'name' => $request['name'],
-            'phone' => $request['phone'] ?? '',
+            'phone' => $request['phone'] ?? 'nope',
             'email' => $request['email'],
             'subject' => $request['subject'],
             'msg' => $request['msg'],
