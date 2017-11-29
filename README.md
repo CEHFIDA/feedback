@@ -32,6 +32,15 @@ Publish config, javascript
 php artisan vendor:publish --provider=Selfreliance\\feedback\\FeedbackServiceProvider --force
 ```
 
+### Also you can connect the information block
+Edit value blocks in config (config/adminamazing.php)
+```
+'blocks' => [
+    //
+    'countFeedback' => 'Selfreliance\Feedback\FeedbackController@registerBlock',
+]
+```
+
 ## Contact form
 
 ### Connect script in your blade

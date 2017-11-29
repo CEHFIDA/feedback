@@ -21,11 +21,12 @@ class FeedbackController extends Controller
     {
         $this->feedback = $model;
         $this->feedbackData = $modelData;
+    }
 
-        \Blocks::register('countFeedback', function(){
-            $count = $this->feedback->count('id');
-            return view('feedback::block', compact('count'))->render();
-        });
+    public function registerBlock()
+    {
+        $count = Feedback::count('id');
+        return view('feedback::block', compact('count'))->render();
     }
 
     public function index()
