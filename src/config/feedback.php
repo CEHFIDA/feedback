@@ -2,5 +2,6 @@
 
 return [
 	'path'		=>	"contacts",
-	'captcha'	=>  false
+	'captcha'	=>  false,
+	'block' => 'countFeedback:Selfreliance\Feedback\FeedbackController@registerBlock'
 ];
