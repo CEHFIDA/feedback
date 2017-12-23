@@ -88,7 +88,7 @@ class FeedbackController extends Controller
     public function send(SendRequest $request)
     {
         if(config('feedback.captcha') == true)
-            $this->validate($request, ['g-recaptcha-response' => 'required|recaptcha']);
+            $this->validate($request, ['g-recaptcha-response' => 'required|captcha']);
 
         $data = [
             'name' => $request['name'],
