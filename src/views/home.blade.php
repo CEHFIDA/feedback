@@ -22,7 +22,7 @@
                                     <th>{{ trans('translate-feedback::feedback.sent') }}</th>
                                     <th>{{ trans('translate-feedback::feedback.theme') }}</th>
                                     <th>{{ trans('translate-feedback::feedback.status') }}</th>
-                                    <th>{{ trans('translate-feedback::feedback.language') }}к</th>
+                                    <th>{{ trans('translate-feedback::feedback.language') }}</th>
                                     <th class="text-nowrap">{{ trans('translate-feedback::feedback.action') }}</th>
                                 </tr>
                             </thead>
