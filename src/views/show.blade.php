@@ -7,7 +7,7 @@
     @endpush
 
     <div class="row">
-        <div class="col-lg-8 col-xlg-9 col-md-7"> 
+        <div class="col-lg-10 col-xlg-9 col-md-9"> 
             <div class="card">
                 <div class="tab-content">
                     <div class="card-block">

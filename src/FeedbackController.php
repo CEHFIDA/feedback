@@ -25,8 +25,15 @@ class FeedbackController extends Controller
 
     public function registerBlock()
     {
-        $count = Feedback::count('id');
-        return view('feedback::block', compact('count'))->render();
+        $count = Feedback::selectRaw('status, count(id) as counts')->groupBy('status')->get();
+        $feedback_data = [];
+        $all = 0;
+        $count->each(function($row) use (&$feedback_data, &$all){
+            $feedback_data[$row->status] = $row->counts;
+            $all += $row->counts;
+        });
+        $data_chart = implode(',', $feedback_data);
+        return view('feedback::block', compact('feedback_data', 'data_chart', 'all'))->render();
     }
 
     public function index()
