@@ -28,6 +28,11 @@ class FeedbackController extends Controller
         $count = Feedback::selectRaw('status, count(id) as counts')->groupBy('status')->get();
         $feedback_data = [];
         $all = 0;
+        $feedback_data = [
+            'New'   => 0,
+            'Reply' => 0,
+            'Read'  => 0
+        ];
         $count->each(function($row) use (&$feedback_data, &$all){
             $feedback_data[$row->status] = $row->counts;
             $all += $row->counts;

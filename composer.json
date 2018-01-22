@@ -1,7 +1,7 @@
 {
   "name": "selfreliance/feedback",
   "type": "library",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "List of feedback for adminamazing",
   "keywords": ["admin", "feedback", "laravel"],
   "homepage": "https://github.com/selfrelianceme/feedback",
